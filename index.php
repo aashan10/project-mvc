@@ -4,27 +4,25 @@ require_once 'vendor/autoload.php';
 
 $router = new App\Router\Router();
 
-$router->get('/', \App\Controllers\HomeController::class . '@index');
+//$router->get('/', \App\Controllers\HomeController::class . '@index');
 
 $router->get( '/', function() {
-    return \App\View\View::make('home', []);
+    echo "This is home page!";
+//    return \App\View\View::make('home', []);
 });
 
 $router->get( '/contact', function() {
-    return view('contact');
+    echo "This is contact page!";
+//    return view('contact');
 });
 $router->post( '/contact', function() {
-    return view('contact');
+    echo "This is contact page with POST method!";
+//    return view('contact');
 });
 
 $router->get( '/features', function() {
-    return view('features');
-});
-
-$router->get( '/users/create', function() {
-    return view('user/create', [
-        'title' => 'App'
-    ]);
+    echo "This is features page!";
+//    return view('features');
 });
 
 $router->get( '/about', function() {
@@ -37,7 +35,9 @@ $uri = $_SERVER['REQUEST_URI'];
 
 
 if (!isset($router->routes()[$method][$uri])) {
-    return view('errors/404');
+    http_response_code(404);
+    echo "Page not found!";
+    exit(0);
 }
 
 $action = $router->routes()[$method][$uri];

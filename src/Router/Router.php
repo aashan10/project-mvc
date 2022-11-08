@@ -9,18 +9,18 @@ class Router
     /** @var array<string, array<string, callable|string>>  */
     protected array $routes = [];
 
-    protected function register(string $method, string $endpoint, Closure $action): self
+    protected function register(string $method, string $endpoint, Closure | string $action): self
     {
         $this->routes[$method][$endpoint] = $action;
         return $this;
     }
 
-    public function get(string $endpoint, Closure $action): self
+    public function get(string $endpoint, Closure | string $action): self
     {
         return $this->register('GET', $endpoint, $action);
     }
 
-    public function post(string $endpoint, Closure $action): self
+    public function post(string $endpoint, Closure | string $action): self
     {
         return $this->register('POST', $endpoint, $action);
     }

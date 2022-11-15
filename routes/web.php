@@ -6,6 +6,6 @@ use App\Controllers\PageController;
 
 $router->get('/', PageController::class . '@index');
 $router->get('/contact', PageController::class . '@contact');
-//$router->get('/features', PageController::class . '@features');
-//$router->get('/about', PageController::class . '@about');
-//$router->post('/contact', PageController::class . '@saveContact');
+$router->post('/contact', PageController::class . '@contactPost');
+$router->get('/contact/list', PageController::class . '@contactList');
+$router->get('/contact/view', PageController::class . '@contactView');

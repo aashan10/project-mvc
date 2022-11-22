@@ -22,6 +22,7 @@ class PageController
     {
         $model = new Contact();
 
+        
         $model->create($_POST);
 
         return View::make('contact');

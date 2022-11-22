@@ -97,6 +97,7 @@
         <form method="post" action="/contact">
             <input placeholder="Name" type="text" name="name">
             <input placeholder="Email" type="email" name="email">
+            <input placeholder="Subject" type="text" name="subject">
             <textarea placeholder="Message" name="message"></textarea>
             <button type="submit">Send Email</button>
         </form>

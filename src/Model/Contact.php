@@ -2,49 +2,42 @@
 
 namespace App\Model;
 
+use App\Database\Connection;
+
 class Contact
 {
 
-    const DATABASE_FILE = __DIR__ . '/contacts.json';
-    protected $data = [];
+    protected Connection $conenction;
 
     public function __construct()
     {
-
-        if (file_exists(self::DATABASE_FILE)) {
-            $string  = file_get_contents(self::DATABASE_FILE);
-            $this->data = json_decode($string, true);
-        } else {
-            file_put_contents(self::DATABASE_FILE, json_encode([], true));
-        }
+        $this->connection = Connection::getInstance();
     }
 
     public function getById(string $id) {
 
-        $data = array_filter($this->data, function ($item) use($id) {
-            return $item['id'] === $id;
-        });
-
-        if(count($data) > 0) {
-            return $data[array_key_first($data)];
-        }
-
-        return false;
+        $query = 'SELECT * FROM `contacts` WHERE `id` = ' . $id;
+        return $this->connection->getPdo()->query($query)->fetch();
     }
 
     public function all ()
     {
-        return $this->data;
+        $query = 'SELECT * FROM `contacts`';
+        return $this->connection->getPdo()->query($query)->fetchAll();
     }
 
     public function save() {
-        file_put_contents(self::DATABASE_FILE, json_encode($this->data));
+        
     }
 
     public function create(array $data) {
+        $name = $data['name'] ?? '';
+        $email = $data['email'] ?? '';
+        $subject = $data['subject'] ?? '';
+        $message = $data['message'] ?? '';
 
-        $data['id'] = md5(microtime());
-        $this->data[] = $data;
-        $this->save();
+        $query = "INSERT INTO `contacts` (`name`, `email`, `subject`, `message`) VALUES ('$name', '$email', '$message', '$subject');";
+
+        $this->connection->getPdo()->query($query)->execute();
     }
 }
